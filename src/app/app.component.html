@@ -1,21 +1,97 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: red;
+}
 
-<router-outlet></router-outlet>
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 80px;
+}
+
+.App-header {
+  background-color: #2d3e50;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+  font-weight: 400;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.App-content {
+  padding-left: 20px;
+}
+
+.App ul, .App h2 {
+  text-align: left;
+}
+
+</style>
+<div className="App">
+  <header className="App-header">
+    <img src='assets/logo.png' className="App-logo" alt="logo" />
+    <h1 className="App-title">Hello BITBOX</h1>
+  </header>
+  <div className='App-content'>
+    <h2><code>getinfo</code></h2>
+    <ul>
+      <li>
+          version: {{version}}
+      </li>
+      <li>
+          protocolversion: {{protocolversion}}
+      </li>
+      <li>
+          walletversion: {{walletversion}}
+      </li>
+      <li>
+          balance: {{balance}}
+      </li>
+      <li>
+          blocks: {{blocks}}
+      </li>
+      <li>
+          timeoffset: {{timeoffset}}
+      </li>
+      <li>
+          connections: {{connections}}
+      </li>
+      <li>
+          proxy: {{proxy}}
+      </li>
+      <li>
+          difficulty: {{difficulty}}
+      </li>
+      <li>
+          testnet: {{testnet}}
+      </li>
+      <li>
+          keypoololdest: {{keypoololdest}}
+      </li>
+      <li>
+          keypoolsize: {{keypoolsize}}
+      </li>
+      <li>
+          paytxfee: {{paytxfee}}
+      </li>
+      <li>
+          relayfee:{{relayfee}}
+      </li>
+      <li>
+          errors: {{errors}
+      </li>
+      </ul>
+  </div>
+</div><router-outlet></router-outlet>
