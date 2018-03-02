@@ -1,4 +1,4 @@
-## BITBOX Scaffold React
+## BITBOX Scaffold Angular
 
 ### Intro
 
