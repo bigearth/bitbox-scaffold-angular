@@ -1,7 +1,8 @@
 {
   "name": "bitbox",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
+  "description": "Basic command line node app w/ BITBOX bindings",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,6 +11,11 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "author": "Carlos Gabriel Cardona",
+  "bugs": {
+    "url": "https://github.com/bigearth/bitbox-scaffold-node/issues"
+  },
+  "homepage": "https://github.com/bigearth/bitbox-scaffold-node#readme",
   "private": true,
   "dependencies": {
     "@angular/animations": "^5.2.0",
@@ -44,6 +50,7 @@
     "protractor": "~5.1.2",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
-    "typescript": "~2.5.3"
+    "typescript": "~2.5.3",
+    "bitbox-cli": "^0.1.7"
   }
 }
