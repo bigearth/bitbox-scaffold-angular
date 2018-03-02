@@ -14,7 +14,7 @@ This scaffold is an Angular app build w/ [`angular-cli`](https://cli.angular.io/
   * `npm install bitbox-cli --global`
 4. Create empty directory for your new app
   * `mkdir BCH4all && cd BCH4all`
-5. Scaffold a React app w/ BITBOX web bindings
+5. Scaffold an Angular app w/ BITBOX web bindings
   * `bitbox scaffold --framework angular`
 6. Install dependencies
   * `npm install`
@@ -22,16 +22,6 @@ This scaffold is an Angular app build w/ [`angular-cli`](https://cli.angular.io/
   * `npm start`
 8. Open a browser to `http://localhost:4200/` and confirm you are seeing the `getinfo` method returning data from your local BITBOX
 9. Win
-
-## Troubleshooting
-
-### `sh: react-scripts: command not found` error?
-
-Run `npm install` before you run `npm start`
-
-### `OPTIONS http://127.0.0.1:8332/ net::ERR_CONNECTION_REFUSED` error?
-
-Start your local BITBOX before running `npm start`
 
 ## Further help
 
