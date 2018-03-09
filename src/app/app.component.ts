@@ -32,7 +32,7 @@ export class AppComponent {
   errors;
   constructor(){
 
-    BITBOX.getinfo()
+    BITBOX.Control.getInfo()
     .then((result) => {
       this.version = result.version;
       this.protocolversion = result.protocolversion,
