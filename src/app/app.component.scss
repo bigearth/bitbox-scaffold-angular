@@ -5,15 +5,12 @@ body {
   background: red;
 }
 
-.App {
-  text-align: center;
-}
-
 .App-logo {
   height: 80px;
 }
 
 .App-header {
+  text-align: center;
   background-color: #2d3e50;
   height: 150px;
   padding: 20px;
@@ -31,6 +28,7 @@ body {
 
 .App-content {
   padding-left: 20px;
+  text-align: left;
 }
 
 .App ul, .App h2 {

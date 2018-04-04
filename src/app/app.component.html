@@ -1,97 +1,24 @@
-<style>
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  background: red;
-}
-
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 80px;
-}
-
-.App-header {
-  background-color: #2d3e50;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-  font-weight: 400;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-.App-content {
-  padding-left: 20px;
-}
-
-.App ul, .App h2 {
-  text-align: left;
-}
-
-</style>
-<div className="App">
-  <header className="App-header">
-    <img src='assets/logo.png' className="App-logo" alt="logo" />
-    <h1 className="App-title">Hello BITBOX</h1>
+<div class="App">
+  <header class="App-header">
+    <img src='assets/logo.png' class="App-logo" alt="logo" />
+    <h1 class="App-title">Hello BITBOX</h1>
   </header>
-  <div className='App-content'>
-    <h2><code>getinfo</code></h2>
+  <div class='App-content'>
+    <h2>BIP44 $BCH Wallet</h2>
+    <h3>256 bit {{lang}} BIP39 Mnemonic:</h3> <p>{{mnemonic}}</p>
+    <h3>BIP44 Account</h3>
+    <p>
+      <code>
+      "m/44'/145'/0'"
+      </code>
+    </p>
+    <h3>BIP44 external change addresses</h3>
     <ul>
-      <li>
-          version: {{version}}
+      <li *ngFor="let address of addresses">
+        {{ address }}
       </li>
-      <li>
-          protocolversion: {{protocolversion}}
-      </li>
-      <li>
-          walletversion: {{walletversion}}
-      </li>
-      <li>
-          balance: {{balance}}
-      </li>
-      <li>
-          blocks: {{blocks}}
-      </li>
-      <li>
-          timeoffset: {{timeoffset}}
-      </li>
-      <li>
-          connections: {{connections}}
-      </li>
-      <li>
-          proxy: {{proxy}}
-      </li>
-      <li>
-          difficulty: {{difficulty}}
-      </li>
-      <li>
-          testnet: {{testnet}}
-      </li>
-      <li>
-          keypoololdest: {{keypoololdest}}
-      </li>
-      <li>
-          keypoolsize: {{keypoolsize}}
-      </li>
-      <li>
-          paytxfee: {{paytxfee}}
-      </li>
-      <li>
-          relayfee:{{relayfee}}
-      </li>
-      <li>
-          errors: {{errors}}
-      </li>
-      </ul>
+    </ul>
+    <h3>Transaction raw hex</h3>
+    <p>{{hex}}</p>
   </div>
 </div><router-outlet></router-outlet>

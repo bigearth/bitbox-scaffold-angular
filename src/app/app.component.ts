@@ -9,47 +9,78 @@ let BITBOX = new BITBOXCli.default({
   password: ''
 });
 
+let langs = [
+  'english',
+  'chinese_simplified',
+  'chinese_traditional',
+  'korean',
+  'japanese',
+  'french',
+  'italian',
+  'spanish'
+];
+
+let lang = langs[Math.floor(Math.random()*langs.length)];
+
+// create 256 bit BIP39 mnemonic
+let mnemonic = BITBOX.Mnemonic.generateMnemonic(256, BITBOX.Mnemonic.mnemonicWordLists()[lang]);
+
+// mnemonic to BIP32 root seed encoded as hex
+let rootSeedHex = BITBOX.Mnemonic.mnemonicToSeedHex(mnemonic);
+
+// root seed to BIP32 master HD Node
+let masterHDNode = BITBOX.HDNode.fromSeedHex(rootSeedHex);
+
+// derive BIP 44 external receive address
+let childNode = masterHDNode.derivePath("m/44'/145'/0'/0/0");
+
+// instance of transaction builder
+let transactionBuilder = new BITBOX.TransactionBuilder('bitcoincash');
+
+// keypair of BIP44 receive address
+let keyPair = childNode.keyPair;
+
+// txid of utxo
+let txid = '5699610b1db28d77b1021ed457d5d9010900923143757bc8698083fa796b3307';
+
+// add input txid, vin 1 and keypair
+transactionBuilder.addInput(txid, 1, keyPair);
+
+// calculate fee @ 1 sat/B
+let byteCount = BITBOX.BitcoinCash.getByteCount({ P2PKH: 1 }, { P2PKH: 1 });
+
+// subtract fee from original amount
+let originalAmount = 3678031;
+
+let sendAmount = originalAmount - byteCount;
+
+// add receive address and send amount
+transactionBuilder.addOutput('qpq57nsrhje3725fzxfjdqzdngep3cfk2sfmy8yexj', sendAmount);
+
+// sign tx
+transactionBuilder.sign(0, originalAmount);
+
+// build it and raw hex
+let tx = transactionBuilder.build();
+let hex = tx.toHex();
+
 @Component({
   selector: 'bitbox',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  version;
-  protocolversion;
-  walletversion;
-  balance;
-  blocks;
-  timeoffset;
-  connections;
-  proxy;
-  difficulty;
-  testnet;
-  keypoololdest;
-  keypoolsize;
-  paytxfee;
-  relayfee;
-  errors;
+  mnemonic;
+  lang;
+  hex;
+  addresses = [];
   constructor(){
-
-    BITBOX.Control.getInfo()
-    .then((result) => {
-      this.version = result.version;
-      this.protocolversion = result.protocolversion,
-      this.walletversion = result.walletversion,
-      this.balance = result.balance,
-      this.blocks = result.blocks,
-      this.timeoffset = result.timeoffset,
-      this.connections = result.connections,
-      this.proxy = result.proxy,
-      this.difficulty = result.difficulty,
-      this.testnet = result.testnet,
-      this.keypoololdest = result.keypoololdest,
-      this.keypoolsize = result.keypoolsize,
-      this.paytxfee = result.paytxfee,
-      this.relayfee = result.relayfee,
-      this.errors = result.errors
-    }, (err) => { console.log(err);
-    });
+    this.mnemonic = mnemonic;
+    this.lang = lang;
+    this.hex = hex;
+    for(let i = 0; i < 10; i++) {
+      let childNode = masterHDNode.derivePath("m/44'/145'/0'/0/" + i);
+      this.addresses.push("m/44'/145'/0'/0/" + i + ": " + BITBOX.HDNode.toCashAddress(childNode));
+    }
   }
 }
