@@ -39,16 +39,16 @@ let childNode = BITBOX.HDNode.derivePath(masterHDNode, "m/44'/145'/0'/0/0");
 let transactionBuilder = new BITBOX.TransactionBuilder('bitcoincash');
 
 // keypair of BIP44 receive address
-let keyPair = childNode.keyPair;
+let keyPair = BITBOX.HDNode.toKeyPair(childNode);
 
 // txid of utxo
-let txid = '5699610b1db28d77b1021ed457d5d9010900923143757bc8698083fa796b3307';
+let txid = '362a884ac1e901255bce551664f1d3eaa7c78226c5ff79f3fc2587259ce262e0';
 
 // subtract fee from original amount
-let originalAmount = 3678031;
+let originalAmount = 5084;
 
 // add input txid, vin 1 and keypair
-transactionBuilder.addInput(txid, 1);
+transactionBuilder.addInput(txid, 0);
 
 // calculate fee @ 1 sat/B
 let byteCount = BITBOX.BitcoinCash.getByteCount({ P2PKH: 1 }, { P2PKH: 1 });
@@ -65,6 +65,9 @@ transactionBuilder.sign(0, keyPair, redeemScript, transactionBuilder.hashTypes.S
 // build it and raw hex
 let tx = transactionBuilder.build();
 let hex = tx.toHex();
+
+// sendRawTransaction to running BCH
+BITBOX.RawTransactions.sendRawTransaction(hex).then((result) => { console.log(result); }, (err) => { console.log(err); });
 
 @Component({
   selector: 'bitbox',
