@@ -7,7 +7,7 @@ let BITBOX = new BITBOXCli.default({
   port: 8332,
   username: '',
   password: '',
-  corsproxy: 'remote' 
+  corsproxy: 'remote'
 });
 
 let langs = [
@@ -67,7 +67,7 @@ let tx = transactionBuilder.build();
 let hex = tx.toHex();
 
 // sendRawTransaction to running BCH
-BITBOX.RawTransactions.sendRawTransaction(hex).then((result) => { console.log(result); }, (err) => { console.log(err); });
+// BITBOX.RawTransactions.sendRawTransaction(hex).then((result) => { console.log(result); }, (err) => { console.log(err); });
 
 @Component({
   selector: 'bitbox',
