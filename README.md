@@ -20,7 +20,7 @@ This scaffold is an Angular app build w/ [`angular-cli`](https://cli.angular.io/
   * `npm install`
 7. Start the app
   * `npm start`
-8. Open a browser to `http://localhost:4200/` and confirm you are seeing the `getinfo` method returning data from your local BITBOX
+8. Open a browser to `http://localhost:3000/` and confirm you are seeing the `getinfo` method returning data from your local BITBOX
 9. Win
 
 ## Further help
