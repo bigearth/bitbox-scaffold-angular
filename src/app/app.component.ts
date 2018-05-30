@@ -26,48 +26,74 @@ let lang = langs[Math.floor(Math.random()*langs.length)];
 // create 256 bit BIP39 mnemonic
 let mnemonic = BITBOX.Mnemonic.generate(256, BITBOX.Mnemonic.wordLists()[lang]);
 
-// mnemonic to BIP32 root seed encoded as buffer
+// root seed buffer
 let rootSeed = BITBOX.Mnemonic.toSeed(mnemonic);
 
-// root seed to BIP32 master HD Node
-let masterHDNode = BITBOX.HDNode.fromSeed(rootSeed);
+// master HDNode
+let masterHDNode = BITBOX.HDNode.fromSeed(rootSeed, 'bitcoincash');
 
-// derive BIP 44 external receive address
-let childNode = BITBOX.HDNode.derivePath(masterHDNode, "m/44'/145'/0'/0/0");
+// HDNode of BIP44 account
+let account = BITBOX.HDNode.derivePath(masterHDNode, "m/44'/145'/0'");
 
-// instance of transaction builder
-let transactionBuilder = new BITBOX.TransactionBuilder('bitcoincash');
+// derive the first external change address HDNode which is going to spend utxo
+let change = BITBOX.HDNode.derivePath(account, "0/0");
 
-// keypair of BIP44 receive address
-let keyPair = BITBOX.HDNode.toKeyPair(childNode);
+// get the cash address
+let cashAddress = BITBOX.HDNode.toCashAddress(change);
 
-// txid of utxo
-let txid = '362a884ac1e901255bce551664f1d3eaa7c78226c5ff79f3fc2587259ce262e0';
+let hex;
 
-// subtract fee from original amount
-let originalAmount = 5084;
+BITBOX.Address.utxo(cashAddress).then((result) => {
+  if(!result[0]) {
+    return;
+  }
 
-// add input txid, vin 1 and keypair
-transactionBuilder.addInput(txid, 0);
+  // instance of transaction builder
+  let transactionBuilder = new BITBOX.TransactionBuilder('bitcoincash');
+  // original amount of satoshis in vin
 
-// calculate fee @ 1 sat/B
-let byteCount = BITBOX.BitcoinCash.getByteCount({ P2PKH: 1 }, { P2PKH: 1 });
+  let originalAmount = result[0].satoshis;
 
-let sendAmount = originalAmount - byteCount;
+  // index of vout
+  let vout = result[0].vout;
 
-// add receive address and send amount
-transactionBuilder.addOutput('bitcoincash:qpuax2tarq33f86wccwlx8ge7tad2wgvqgjqlwshpw', sendAmount);
+  // txid of vout
+  let txid = result[0].txid;
 
-// sign tx
-let redeemScript;
-transactionBuilder.sign(0, keyPair, redeemScript, transactionBuilder.hashTypes.SIGHASH_ALL, originalAmount);
+  // add input with txid and index of vout
+  transactionBuilder.addInput(txid, vout);
 
-// build it and raw hex
-let tx = transactionBuilder.build();
-let hex = tx.toHex();
+  // get byte count to calculate fee. paying 1 sat/byte
+  let byteCount = BITBOX.BitcoinCash.getByteCount({ P2PKH: 1 }, { P2PKH: 1 });
+  // 192
 
-// sendRawTransaction to running BCH
-// BITBOX.RawTransactions.sendRawTransaction(hex).then((result) => { console.log(result); }, (err) => { console.log(err); });
+  // amount to send to receiver. It's the original amount - 1 sat/byte for tx size
+  let sendAmount = originalAmount - byteCount;
+
+  // add output w/ address and amount to send
+  transactionBuilder.addOutput(cashAddress, sendAmount);
+
+  // keypair
+  let keyPair = BITBOX.HDNode.toKeyPair(change);
+
+  // sign w/ HDNode
+  let redeemScript;
+  transactionBuilder.sign(0, keyPair, redeemScript, transactionBuilder.hashTypes.SIGHASH_ALL, originalAmount);
+
+  // build tx
+  let tx = transactionBuilder.build();
+  // output rawhex
+  let hex = tx.toHex();
+
+  // sendRawTransaction to running BCH node
+  BITBOX.RawTransactions.sendRawTransaction(hex).then((result) => {
+    console.log(result);
+  }, (err) => {
+    console.log(err);
+  });
+}, (err) => {
+  console.log(err);
+});
 
 @Component({
   selector: 'bitbox',
@@ -84,8 +110,8 @@ export class AppComponent {
     this.lang = lang;
     this.hex = hex;
     for(let i = 0; i < 10; i++) {
-      let childNode = masterHDNode.derivePath("m/44'/145'/0'/0/" + i);
-      this.addresses.push("m/44'/145'/0'/0/" + i + ": " + BITBOX.HDNode.toCashAddress(childNode));
+      let account = masterHDNode.derivePath("m/44'/145'/0'/0/" + i);
+      this.addresses.push("m/44'/145'/0'/0/" + i + ": " + BITBOX.HDNode.toCashAddress(account));
     }
   }
 }
