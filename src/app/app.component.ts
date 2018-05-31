@@ -76,7 +76,7 @@ BITBOX.Address.utxo(cashAddress).then((result) => {
   // build tx
   let tx = transactionBuilder.build();
   // output rawhex
-  let hex = tx.toHex();
+  hex = tx.toHex();
 
   // sendRawTransaction to running BCH node
   BITBOX.RawTransactions.sendRawTransaction(hex).then((result) => {
