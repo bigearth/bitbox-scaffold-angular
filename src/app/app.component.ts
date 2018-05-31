@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import BITBOXCli = require("bitbox-cli/lib/bitboxcli");
+import BITBOXCli = require("bitbox-cli/lib/bitbox-cli");
 
 let BITBOX = new BITBOXCli.default();
 
