@@ -1,14 +1,7 @@
 import { Component } from '@angular/core';
 import BITBOXCli = require("bitbox-cli/lib/bitboxcli");
 
-let BITBOX = new BITBOXCli.default({
-  protocol: 'http',
-  host: '127.0.0.1',
-  port: 8332,
-  username: '',
-  password: '',
-  corsproxy: 'remote'
-});
+let BITBOX = new BITBOXCli.default();
 
 let langs = [
   'english',
