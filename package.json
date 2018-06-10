@@ -1,6 +1,6 @@
 {
   "name": "bitbox",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "license": "MIT",
   "description": "Basic angular app w/ BITBOX bindings",
   "scripts": {
@@ -39,7 +39,7 @@
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
-    "bitbox-cli": "0.9.7",
+    "bitbox-cli": "1.0.0",
     "codelyzer": "^4.0.1",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
